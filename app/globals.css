@@ -1,29 +1,92 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0b1a;
-  --foreground: #e2e8f0;
-  --card: #111235;
+  --background: #060611;
+  --foreground: #eef0f6;
+  --card: #0c0c1d;
+  --card-border: rgba(255, 255, 255, 0.06);
   --primary-purple: #7c3aed;
-  --primary-blue: #1e3a8a;
+  --primary-blue: #2563eb;
   --accent-glow: #a78bfa;
   --price-gold: #fbbf24;
+  --muted: #64748b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-card-border: var(--card-border);
   --color-primary-purple: var(--primary-purple);
   --color-primary-blue: var(--primary-blue);
   --color-accent-glow: var(--accent-glow);
   --color-price-gold: var(--price-gold);
+  --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scroll-triggered animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.animate-on-scroll.is-visible {
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-on-scroll {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.animate-scale-on-scroll.is-visible {
+  animation: scaleIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger delays */
+.stagger-children.is-visible > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children.is-visible > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children.is-visible > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children.is-visible > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children.is-visible > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children.is-visible > *:nth-child(6) { animation-delay: 400ms; }
+
+.glow-pulse {
+  animation: glowPulse 8s ease-in-out infinite;
+}
+
+/* Divider */
+.glow-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-glow) 50%, transparent);
+  opacity: 0.15;
 }
