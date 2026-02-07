@@ -171,7 +171,7 @@ export default function Home() {
           {/* Price + CTA */}
           <div className="mt-10 flex flex-col items-center gap-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-black text-price-gold sm:text-6xl">$8,020</span>
+              <span className="text-5xl font-black bg-gradient-to-r from-primary-purple via-accent-glow to-primary-blue bg-clip-text text-transparent sm:text-6xl">$8,020</span>
               <span className="text-sm font-medium uppercase tracking-wider text-muted">one‑time</span>
             </div>
             <CtaButton onClick={openModal}>Apply Now</CtaButton>
@@ -282,7 +282,7 @@ export default function Home() {
           </div>
 
           <div className="animate-scale-on-scroll mt-14 rounded-3xl border border-card-border bg-card/50 p-10 backdrop-blur-sm sm:p-14">
-            <p className="text-6xl font-black leading-none text-price-gold sm:text-8xl">$8,020</p>
+            <p className="text-6xl font-black leading-none bg-gradient-to-r from-primary-purple via-accent-glow to-primary-blue bg-clip-text text-transparent sm:text-8xl">$8,020</p>
             <p className="mt-2 text-sm font-medium uppercase tracking-[0.25em] text-muted">One‑Time Payment</p>
 
             <ul className="mx-auto mt-10 flex max-w-xs flex-col gap-3.5 text-left">

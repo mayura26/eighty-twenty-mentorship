@@ -8,7 +8,7 @@
   --primary-purple: #7c3aed;
   --primary-blue: #2563eb;
   --accent-glow: #a78bfa;
-  --price-gold: #fbbf24;
+  --price-highlight: #a78bfa;
   --muted: #64748b;
 }
 
@@ -20,7 +20,7 @@
   --color-primary-purple: var(--primary-purple);
   --color-primary-blue: var(--primary-blue);
   --color-accent-glow: var(--accent-glow);
-  --color-price-gold: var(--price-gold);
+  --color-price-highlight: var(--price-highlight);
   --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
