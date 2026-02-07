@@ -4,6 +4,12 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
+/*  Constants                                                          */
+/* ------------------------------------------------------------------ */
+
+const WHOP_URL = "https://whop.com/8020";
+
+/* ------------------------------------------------------------------ */
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -40,13 +46,21 @@ const FEATURES = [
   },
 ];
 
-const VALUE_PROPS = [
+const PDF_PERKS = [
+  "Complete day trading strategy guide",
+  "Core concepts & chart setups",
+  "Risk management framework",
+  "Entry & exit rules explained",
+  "Self‑paced, lifetime access",
+];
+
+const MENTORSHIP_PERKS = [
+  "Everything in the PDF",
   "Personal 1‑on‑1 mentorship sessions",
   "Live trading with real‑time screen share",
-  "Custom strategy built specifically for you",
+  "Custom strategy built for you",
   "Private dinner with your mentor",
   "Ongoing support & trade reviews",
-  "No hidden fees — ever",
 ];
 
 /* ------------------------------------------------------------------ */
@@ -82,15 +96,30 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+function PaymentButton({ children, href = WHOP_URL, size = "lg", fullWidth }: { children: React.ReactNode; href?: string; size?: "lg" | "md"; fullWidth?: boolean }) {
+  const sizing = size === "lg" ? "px-12 py-4 text-base sm:px-14 sm:py-5 sm:text-lg" : "px-8 py-3 text-sm";
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group relative inline-flex cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-violet-600 to-blue-500 font-bold uppercase tracking-widest text-white transition-all duration-300 hover:shadow-[0_0_40px_rgba(124,58,237,0.4)] hover:scale-105 ${sizing} ${fullWidth ? "w-full" : ""}`}
+    >
+      <span className="absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <svg className="relative h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+      </svg>
+      <span className="relative whitespace-nowrap">{children}</span>
+    </a>
+  );
+}
+
 /* ------------------------------------------------------------------ */
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   /* Scroll‑triggered animations */
@@ -112,18 +141,7 @@ export default function Home() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Modal keyboard + body lock */
-  useEffect(() => {
-    if (!modalOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setModalOpen(false); };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [modalOpen]);
-
-  useEffect(() => { document.body.style.overflow = modalOpen ? "hidden" : ""; }, [modalOpen]);
-
-  const openModal = () => { setSubmitted(false); setFormData({ name: "", email: "", phone: "" }); setModalOpen(true); };
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); console.log("Form submitted:", formData); setSubmitted(true); };
+  const scrollToPricing = () => { document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth" }); };
 
   return (
     <div ref={setupObserver} className="relative overflow-x-hidden">
@@ -131,10 +149,11 @@ export default function Home() {
       {/* =============== STICKY NAV =============== */}
       <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg shadow-lg shadow-black/20" : "bg-transparent"}`}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="text-xl font-black tracking-tight">
-            <span className="bg-gradient-to-r from-accent-glow to-primary-blue bg-clip-text text-transparent">8020</span>
+          <a href="#" className="flex items-center gap-2.5">
+            <Image src="/logo.png" alt="8020Trading" width={44} height={44} className="h-10 w-10 sm:h-11 sm:w-11" />
+            <span className="text-xl font-black tracking-tight bg-gradient-to-r from-accent-glow to-primary-blue bg-clip-text text-transparent">8020Trading</span>
           </a>
-          <CtaButton onClick={openModal} size="md">Apply Now</CtaButton>
+          <CtaButton onClick={scrollToPricing} size="md">Get Started</CtaButton>
         </div>
       </nav>
 
@@ -168,20 +187,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Price + CTA */}
-          <div className="mt-10 flex flex-col items-center gap-4">
-            <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-black bg-gradient-to-r from-primary-purple via-accent-glow to-primary-blue bg-clip-text text-transparent sm:text-6xl">$8,020</span>
-              <span className="text-sm font-medium uppercase tracking-wider text-muted">one‑time</span>
-            </div>
-            <CtaButton onClick={openModal}>Apply Now</CtaButton>
-          </div>
-        </div>
-
-        {/* Scroll cue */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="flex h-10 w-6 items-start justify-center rounded-full border border-white/15 p-1.5">
-            <div className="h-2 w-1 animate-bounce rounded-full bg-white/40" />
+          {/* CTA — prices shown in pricing section */}
+          <div className="mt-10">
+            <CtaButton onClick={scrollToPricing}>Get Started</CtaButton>
           </div>
         </div>
       </section>
@@ -218,7 +226,7 @@ export default function Home() {
               You&apos;ll get direct access — no group calls, no pre‑recorded videos, no fluff. Just real mentorship built around your goals.
             </p>
             <div className="mt-8">
-              <CtaButton onClick={openModal} size="md">Start Your Journey</CtaButton>
+              <CtaButton onClick={scrollToPricing} size="md">Start Your Journey</CtaButton>
             </div>
           </div>
         </div>
@@ -265,37 +273,98 @@ export default function Home() {
       <div className="glow-divider mx-auto max-w-4xl" />
 
       {/* =============== PRICING =============== */}
-      <section className="relative px-6 py-28 sm:py-36">
+      <section id="pricing" className="relative px-6 py-28 sm:py-36">
         <div className="pointer-events-none absolute inset-0">
           <div className="glow-pulse absolute bottom-0 left-1/2 h-[500px] w-[600px] -translate-x-1/2 rounded-full bg-primary-purple/8 blur-[180px]" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-xl text-center">
-          <div className="animate-on-scroll">
+        <div className="relative z-10 mx-auto max-w-4xl">
+          <div className="animate-on-scroll text-center">
             <SectionLabel>Your Investment</SectionLabel>
             <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-5xl">
-              One Price. No Surprises.
+              Choose Your Path
             </h2>
-            <p className="mx-auto mt-4 max-w-md text-lg text-muted">
-              A single payment gets you everything — mentorship, strategy, dinner, and lifetime support.
+            <p className="mx-auto mt-4 max-w-lg text-lg text-muted">
+              Start with the strategy guide or go all‑in with personal mentorship.
             </p>
           </div>
 
-          <div className="animate-scale-on-scroll mt-14 rounded-3xl border border-card-border bg-card/50 p-10 backdrop-blur-sm sm:p-14">
-            <p className="text-6xl font-black leading-none bg-gradient-to-r from-primary-purple via-accent-glow to-primary-blue bg-clip-text text-transparent sm:text-8xl">$8,020</p>
-            <p className="mt-2 text-sm font-medium uppercase tracking-[0.25em] text-muted">One‑Time Payment</p>
+          <div className="stagger-children mt-14 grid gap-6 sm:grid-cols-2">
 
-            <ul className="mx-auto mt-10 flex max-w-xs flex-col gap-3.5 text-left">
-              {VALUE_PROPS.map((v) => (
-                <li key={v} className="flex items-start gap-3 text-sm text-slate-300">
-                  <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent-glow" />
-                  {v}
-                </li>
-              ))}
-            </ul>
+            {/* ---- PDF Tier ---- */}
+            <div className="animate-on-scroll rounded-3xl border border-card-border bg-card/50 p-8 backdrop-blur-sm sm:p-10 flex flex-col">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Strategy Guide</span>
+              <div className="mt-4 flex items-baseline gap-2">
+                <span className="text-5xl font-black text-foreground">$149</span>
+                <span className="text-sm font-medium text-muted">one‑time</span>
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                The complete 8020 day trading strategy — distilled into an actionable PDF you can study at your own pace.
+              </p>
 
-            <div className="mt-10">
-              <CtaButton onClick={openModal}>Apply Now</CtaButton>
+              <ul className="mt-8 flex flex-1 flex-col gap-3 text-left">
+                {PDF_PERKS.map((v) => (
+                  <li key={v} className="flex items-start gap-3 text-sm text-slate-300">
+                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent-glow" />
+                    {v}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-auto pt-10">
+                <PaymentButton size="md" fullWidth>Get the PDF</PaymentButton>
+              </div>
+            </div>
+
+            {/* ---- Mentorship Tier ---- */}
+            <div className="animate-on-scroll relative rounded-3xl p-px bg-gradient-to-b from-accent-glow/30 via-card-border to-primary-blue/30 flex flex-col">
+              {/* Popular badge */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+                Most Popular
+              </div>
+
+              <div className="rounded-3xl bg-card/95 p-8 backdrop-blur-sm sm:p-10 flex flex-col h-full">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-glow">1‑on‑1 Mentorship</span>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className="text-5xl font-black bg-gradient-to-r from-primary-purple via-accent-glow to-primary-blue bg-clip-text text-transparent">$8,020</span>
+                  <span className="text-sm font-medium text-muted">/ month</span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  The full experience — personal mentorship, live trading, custom strategy, dinner, and ongoing support.
+                </p>
+
+                <ul className="mt-8 flex flex-1 flex-col gap-3 text-left">
+                  {MENTORSHIP_PERKS.map((v) => (
+                    <li key={v} className="flex items-start gap-3 text-sm text-slate-300">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent-glow" />
+                      {v}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-10">
+                  <PaymentButton fullWidth>Secure Your Spot</PaymentButton>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Trust signals */}
+          <div className="mt-12 flex flex-col items-center gap-4">
+            <p className="max-w-md text-center text-sm leading-relaxed text-muted">
+              Both options available at checkout — choose the PDF ($149) or 8020 mentorship (monthly).
+            </p>
+            <div className="flex items-center gap-2 text-xs text-muted">
+              <svg className="h-4 w-4 text-accent-glow" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+              Secure checkout powered by Whop
+            </div>
+            <div className="flex items-center gap-4 text-muted/60">
+              <span className="rounded border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold tracking-wider">VISA</span>
+              <span className="rounded border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold tracking-wider">MC</span>
+              <span className="rounded border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold tracking-wider">AMEX</span>
+              <span className="rounded border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold tracking-wider">APPLE PAY</span>
             </div>
           </div>
         </div>
@@ -317,79 +386,19 @@ export default function Home() {
             Spots are limited. Don&apos;t miss your chance to learn from a mentor who&apos;s been where you want to go.
           </p>
           <div className="mt-8">
-            <CtaButton onClick={openModal}>Apply Now</CtaButton>
+            <PaymentButton>Secure Your Spot</PaymentButton>
           </div>
         </div>
       </section>
 
       {/* =============== FOOTER =============== */}
-      <footer className="border-t border-white/5 px-6 py-10 text-center text-sm text-muted">
-        &copy; {new Date().getFullYear()} 8020 Day Trading Mentorship. All rights reserved.
+      <footer className="border-t border-white/5 px-6 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 text-center text-sm text-muted">
+          <Image src="/logo.png" alt="8020" width={36} height={36} className="h-9 w-9 opacity-90" />
+          <p>&copy; {new Date().getFullYear()} 8020 Day Trading Mentorship. All rights reserved.</p>
+        </div>
       </footer>
 
-      {/* =============== MODAL =============== */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
-          onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Application form"
-        >
-          <div className="relative w-full max-w-md rounded-2xl border border-card-border bg-card p-8 shadow-[0_0_80px_rgba(124,58,237,0.12)]">
-            <button
-              onClick={() => setModalOpen(false)}
-              className="absolute right-4 top-4 cursor-pointer text-muted transition-colors hover:text-white"
-              aria-label="Close dialog"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {submitted ? (
-              <div className="flex flex-col items-center py-10 text-center">
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-blue-500">
-                  <CheckIcon className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">You&apos;re In!</h3>
-                <p className="mt-2 text-sm text-muted">We&apos;ll be in touch shortly to get you started.</p>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-2xl font-bold text-foreground">Apply Now</h3>
-                <p className="mt-1 text-sm text-muted">Fill in your details and we&apos;ll reach out to schedule your first session.</p>
-                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-                  {([
-                    { id: "name", label: "Full Name", type: "text", placeholder: "John Doe", key: "name" },
-                    { id: "email", label: "Email", type: "email", placeholder: "john@example.com", key: "email" },
-                    { id: "phone", label: "Phone", type: "tel", placeholder: "(555) 123-4567", key: "phone" },
-                  ] as const).map((field) => (
-                    <div key={field.id}>
-                      <label htmlFor={field.id} className="mb-1.5 block text-sm font-medium text-slate-300">{field.label}</label>
-                      <input
-                        id={field.id}
-                        type={field.type}
-                        required
-                        value={formData[field.key]}
-                        onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                        className="w-full rounded-xl border border-card-border bg-background px-4 py-3 text-foreground placeholder-slate-600 outline-none transition-colors focus:border-accent-glow/40 focus:ring-1 focus:ring-accent-glow/40"
-                        placeholder={field.placeholder}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    type="submit"
-                    className="w-full cursor-pointer rounded-xl bg-gradient-to-r from-violet-600 to-blue-500 py-3.5 text-base font-bold uppercase tracking-wider text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(124,58,237,0.3)] hover:scale-[1.02]"
-                  >
-                    Submit Application
-                  </button>
-                </form>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
