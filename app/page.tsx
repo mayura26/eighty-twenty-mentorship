@@ -292,11 +292,11 @@ export default function Home() {
           <div className="stagger-children mt-14 grid gap-6 sm:grid-cols-2">
 
             {/* ---- PDF Tier (Best Value) ---- */}
-            <div className="animate-on-scroll relative rounded-3xl p-px bg-gradient-to-b from-accent-glow/30 via-card-border to-primary-blue/30 flex flex-col">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+            <div className="animate-on-scroll relative rounded-3xl p-px bg-gradient-to-b from-accent-glow/30 via-card-border to-primary-blue/30 flex flex-col overflow-visible">
+              <div className="absolute top-0 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white shadow-lg ring-2 ring-card/95">
                 Best Value
               </div>
-              <div className="rounded-3xl bg-card/95 p-8 backdrop-blur-sm sm:p-10 flex flex-col h-full">
+              <div className="rounded-3xl bg-card/95 p-8 pt-10 backdrop-blur-sm sm:p-10 sm:pt-12 flex flex-col h-full">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Strategy Guide</span>
                 <div className="mt-4 flex items-baseline gap-2">
                   <span className="text-5xl font-black text-foreground">$149</span>
