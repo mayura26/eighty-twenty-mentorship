@@ -150,7 +150,7 @@ export default function Home() {
       <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg shadow-lg shadow-black/20" : "bg-transparent"}`}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="8020Trading" width={44} height={44} className="h-10 w-10 sm:h-11 sm:w-11" />
+            <Image src="/logo.png" alt="8020Trading" width={44} height={44} className="h-10 w-10 rounded-xl sm:h-11 sm:w-11" />
             <span className="text-xl font-black tracking-tight bg-gradient-to-r from-accent-glow to-primary-blue bg-clip-text text-transparent">8020Trading</span>
           </a>
           <CtaButton onClick={scrollToPricing} size="md">Get Started</CtaButton>
@@ -291,39 +291,38 @@ export default function Home() {
 
           <div className="stagger-children mt-14 grid gap-6 sm:grid-cols-2">
 
-            {/* ---- PDF Tier ---- */}
-            <div className="animate-on-scroll rounded-3xl border border-card-border bg-card/50 p-8 backdrop-blur-sm sm:p-10 flex flex-col">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Strategy Guide</span>
-              <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-5xl font-black text-foreground">$149</span>
-                <span className="text-sm font-medium text-muted">one‑time</span>
+            {/* ---- PDF Tier (Best Value) ---- */}
+            <div className="animate-on-scroll relative rounded-3xl p-px bg-gradient-to-b from-accent-glow/30 via-card-border to-primary-blue/30 flex flex-col">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+                Best Value
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                The complete 8020 day trading strategy — distilled into an actionable PDF you can study at your own pace.
-              </p>
+              <div className="rounded-3xl bg-card/95 p-8 backdrop-blur-sm sm:p-10 flex flex-col h-full">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">Strategy Guide</span>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className="text-5xl font-black text-foreground">$149</span>
+                  <span className="text-sm font-medium text-muted">one‑time</span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  The complete 8020 day trading strategy — distilled into an actionable PDF you can study at your own pace.
+                </p>
 
-              <ul className="mt-8 flex flex-1 flex-col gap-3 text-left">
-                {PDF_PERKS.map((v) => (
-                  <li key={v} className="flex items-start gap-3 text-sm text-slate-300">
-                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent-glow" />
-                    {v}
-                  </li>
-                ))}
-              </ul>
+                <ul className="mt-8 flex flex-1 flex-col gap-3 text-left">
+                  {PDF_PERKS.map((v) => (
+                    <li key={v} className="flex items-start gap-3 text-sm text-slate-300">
+                      <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-accent-glow" />
+                      {v}
+                    </li>
+                  ))}
+                </ul>
 
-              <div className="mt-auto pt-10">
-                <PaymentButton size="md" fullWidth>Get the PDF</PaymentButton>
+                <div className="mt-auto pt-10">
+                  <PaymentButton size="md" fullWidth>Get the PDF</PaymentButton>
+                </div>
               </div>
             </div>
 
             {/* ---- Mentorship Tier ---- */}
-            <div className="animate-on-scroll relative rounded-3xl p-px bg-gradient-to-b from-accent-glow/30 via-card-border to-primary-blue/30 flex flex-col">
-              {/* Popular badge */}
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600 to-blue-500 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
-                Most Popular
-              </div>
-
-              <div className="rounded-3xl bg-card/95 p-8 backdrop-blur-sm sm:p-10 flex flex-col h-full">
+            <div className="animate-on-scroll rounded-3xl border border-card-border bg-card/50 p-8 backdrop-blur-sm sm:p-10 flex flex-col">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-glow">1‑on‑1 Mentorship</span>
                 <div className="mt-4 flex items-baseline gap-2">
                   <span className="text-5xl font-black bg-gradient-to-r from-primary-purple via-accent-glow to-primary-blue bg-clip-text text-transparent">$8,020</span>
@@ -343,9 +342,8 @@ export default function Home() {
                 </ul>
 
                 <div className="mt-auto pt-10">
-                  <PaymentButton fullWidth>Secure Your Spot</PaymentButton>
+                  <PaymentButton size="md" fullWidth>Secure Your Spot</PaymentButton>
                 </div>
-              </div>
             </div>
           </div>
 
@@ -394,7 +392,7 @@ export default function Home() {
       {/* =============== FOOTER =============== */}
       <footer className="border-t border-white/5 px-6 py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 text-center text-sm text-muted">
-          <Image src="/logo.png" alt="8020" width={36} height={36} className="h-9 w-9 opacity-90" />
+          <Image src="/logo.png" alt="8020" width={36} height={36} className="h-9 w-9 rounded-xl opacity-90" />
           <p>&copy; {new Date().getFullYear()} 8020 Day Trading Mentorship. All rights reserved.</p>
         </div>
       </footer>
