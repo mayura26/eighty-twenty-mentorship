@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: "8020 Day Trading Mentorship | Master the Markets",
   description:
     "Join the 8020 Day Trading Mentorship program. Get personalized 1-on-1 coaching, proven strategies, and master the markets with expert guidance.",
+  appleWebApp: {
+    title: "8020",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
