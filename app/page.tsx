@@ -63,6 +63,45 @@ const MENTORSHIP_PERKS = [
   "Ongoing support & trade reviews",
 ];
 
+const TESTIMONIALS = [
+  {
+    name: "Proxxy",
+    role: "Day Trader",
+    quote: "This mentorship completely changed how I approach the markets. I went from guessing to having a real, repeatable strategy. Best investment I've ever made.",
+    stars: 5,
+  },
+  {
+    name: "LuckStackin",
+    role: "Swing Trader",
+    quote: "The 1-on-1 sessions are next level. Having someone break down my trades in real time and show me exactly where I'm going wrong was a game changer.",
+    stars: 5,
+  },
+  {
+    name: "Mic(pro reset)hael",
+    role: "Beginner Trader",
+    quote: "I started with zero experience and within a few weeks I was placing confident trades. The custom strategy built around my schedule made all the difference.",
+    stars: 5,
+  },
+  {
+    name: "ZeroDayJay",
+    role: "Full-Time Trader",
+    quote: "I've paid for courses, signals, you name it. Nothing comes close to actual 1-on-1 mentorship. The live trading sessions alone are worth 10x the price.",
+    stars: 5,
+  },
+  {
+    name: "yumyum",
+    role: "Part-Time Trader",
+    quote: "The risk management framework saved me from blowing another account. I finally feel like I have a real edge in the market.",
+    stars: 5,
+  },
+  {
+    name: "lil bro",
+    role: "Options Trader",
+    quote: "Went from struggling to consistent green weeks. The ongoing support after the program is what really sets this apart from everything else out there.",
+    stars: 5,
+  },
+];
+
 /* ------------------------------------------------------------------ */
 /*  Tiny components                                                    */
 /* ------------------------------------------------------------------ */
@@ -264,6 +303,56 @@ export default function Home() {
                 </div>
                 <h3 className="text-base font-bold text-foreground">{f.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="glow-divider mx-auto max-w-4xl" />
+
+      {/* =============== TESTIMONIALS =============== */}
+      <section className="relative px-6 py-28 sm:py-36">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="glow-pulse absolute right-1/4 top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-primary-purple/6 blur-[200px]" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-5xl">
+          <div className="animate-on-scroll text-center">
+            <SectionLabel>Testimonials</SectionLabel>
+            <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-5xl">
+              Hear It From Our Traders
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
+              Real results from real people who took the leap.
+            </p>
+          </div>
+
+          <div className="stagger-children mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TESTIMONIALS.map((t) => (
+              <div
+                key={t.name}
+                className="animate-on-scroll group rounded-2xl border border-card-border bg-card/50 p-7 backdrop-blur-sm transition-all duration-300 hover:border-accent-glow/20 hover:bg-card hover:shadow-[0_0_30px_rgba(124,58,237,0.08)]"
+              >
+                <div className="mb-4 flex gap-0.5">
+                  {Array.from({ length: t.stars }).map((_, i) => (
+                    <svg key={i} className="h-4 w-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-sm leading-relaxed text-slate-300">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary-purple/30 to-primary-blue/30 text-sm font-bold text-accent-glow">
+                    {t.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                    <p className="text-xs text-muted">{t.role}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
