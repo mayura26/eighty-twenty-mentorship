@@ -26,7 +26,7 @@ const FEATURES = [
   },
   {
     title: "Custom Strategy",
-    desc: "A personalized trading plan built around your risk tolerance, capital, and schedule.",
+    desc: "A personalized trading plan built around your risk tolerance, capital, schedule, and prop firm rules.",
     icon: "M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75",
   },
   {
@@ -47,10 +47,11 @@ const FEATURES = [
 ];
 
 const PDF_PERKS = [
-  "Complete day trading strategy guide",
-  "Core concepts & chart setups",
-  "Risk management framework",
-  "Entry & exit rules explained",
+  "Prop firm basics — what they are, how evaluations work, and top futures firms",
+  "Core 80/20 strategy: Fork, Cross Section, and h Pattern setups",
+  "Repairs concept — identifying high‑probability magnet zones",
+  "Risk management & passing blueprint (daily SOP, eval rules)",
+  "Trade examples with entry, stop, and target criteria",
   "Self‑paced, lifetime access",
 ];
 
@@ -215,7 +216,7 @@ export default function Home() {
           </h1>
 
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
-            An exclusive, hands‑on mentorship program designed to transform you into a confident, profitable trader.
+            An exclusive, hands‑on mentorship program for traders — with strategies built for prop firm evaluations and consistent income.
           </p>
 
           {/* Headshot */}
@@ -374,7 +375,7 @@ export default function Home() {
               Choose Your Path
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-lg text-muted">
-              Start with the strategy guide or go all‑in with personal mentorship.
+              Start with the strategy PDF or go all‑in with personal mentorship.
             </p>
           </div>
 
@@ -392,7 +393,7 @@ export default function Home() {
                   <span className="text-sm font-medium text-muted">one‑time</span>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
-                  The complete 8020 day trading strategy — distilled into an actionable PDF you can study at your own pace.
+                  The complete 80/20 Liquidity strategy for prop firm evaluations — distilled into an actionable PDF you can study at your own pace.
                 </p>
 
                 <ul className="mt-8 flex flex-1 flex-col gap-3 text-left">
